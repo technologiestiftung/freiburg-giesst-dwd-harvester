@@ -1,5 +1,5 @@
-name: "Giessdenkiez.de DWD Harvester"
-description: "Collect rain data from the DWD for the giessdenkiez.de app"
+name: "Freiburg gießt DWD Harvester"
+description: "Collect rain data from the DWD for the Freiburg gießt app"
 inputs:
   PG_SERVER:
     description: "The server where the PostgreSQL database lives"
