@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
     paths:
       - harvester/*.py
       - harvester/Dockerfile
