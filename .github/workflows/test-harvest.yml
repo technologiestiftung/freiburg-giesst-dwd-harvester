@@ -6,11 +6,11 @@ permissions:
 on:
   push:
     branches:
-      - master
+      - main
       - staging
   pull_request:
     branches:
-      - master
+      - main
       - staging
   workflow_dispatch:
 
@@ -51,9 +51,9 @@ jobs:
           repository: technologiestiftung/giessdenkiez-de-postgres-api
           path: api
           ref: staging
-      - name: Get the source for the api master
+      - name: Get the source for the api main
         uses: actions/checkout@v4
-        if: github.event.pull_request.base.ref == 'master' || github.ref == 'refs/heads/master'
+        if: github.event.pull_request.base.ref == 'main' || github.ref == 'refs/heads/main'
         with:
           repository: technologiestiftung/giessdenkiez-de-postgres-api
           path: api
