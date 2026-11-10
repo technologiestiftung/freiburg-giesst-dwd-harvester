@@ -1,27 +1,39 @@
 name: Docker Image Builder
 
 env:
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   HARVESTER_FOLDER: harvester/
   SURROUNDING_SHAPE_FILE: "/app/assets/freiburg.shp"
+  IMAGE: ghcr.io/${{ github.repository }}
 
 on:
   release:
     types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Get the source
-        uses: actions/checkout@v3
-      - name: Docker login, build and push
+        uses: actions/checkout@v4
+      - name: Login to GHCR, build and push
+        env:
+          TAG: ${{ github.event.release.tag_name || github.sha }}
+          LATEST: ${{ github.event_name == 'release' && !github.event.release.prerelease }}
         run: |
-          cd $HARVESTER_FOLDER
-          echo "$DOCKER_PASSWORD" |  docker login -u "$DOCKER_USERNAME" --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          cd "$HARVESTER_FOLDER"
           docker build \
-          --label version=${GITHUB_REF##*/} \
-          --build-arg SURROUNDING_SHAPE_FILE='${{ env.SURROUNDING_SHAPE_FILE }}' \
-          --tag "${GITHUB_REPOSITORY}:${GITHUB_REF##*/}" .
-          docker push "${GITHUB_REPOSITORY}:${GITHUB_REF##*/}"
+            --label org.opencontainers.image.source="https://github.com/${{ github.repository }}" \
+            --label version="$TAG" \
+            --build-arg SURROUNDING_SHAPE_FILE="$SURROUNDING_SHAPE_FILE" \
+            --tag "$IMAGE:$TAG" .
+          docker push "$IMAGE:$TAG"
+          if [ "$LATEST" = "true" ]; then
+            docker tag "$IMAGE:$TAG" "$IMAGE:latest"
+            docker push "$IMAGE:latest"
+          fi
