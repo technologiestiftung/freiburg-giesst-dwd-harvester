@@ -7,6 +7,9 @@ import psycopg2
 from datetime import datetime
 from datetime import timedelta
 import pytz
+import os
+
+MAPBOX_API_URL = os.getenv("MAPBOX_API_URL", "https://api.mapbox.com")
 
 
 def upload_to_mapbox_storage(path_to_file, mapbox_username, mapbox_token):
@@ -21,7 +24,7 @@ def upload_to_mapbox_storage(path_to_file, mapbox_username, mapbox_token):
         _type_: Mabox credentials dictionary holding bucket and key information
     """
     logging.info(f"Uploading data to Mapbox storage...")
-    url = "https://api.mapbox.com/uploads/v1/{}/credentials?access_token={}".format(
+    url = MAPBOX_API_URL + "/uploads/v1/{}/credentials?access_token={}".format(
         mapbox_username, mapbox_token
     )
     response = requests.post(url)
@@ -62,7 +65,7 @@ def start_tileset_creation(
         str: Mapbox upload id of the started tileset creation
     """
     logging.info(f"Starting Mapbox tileset creation...")
-    url = "https://api.mapbox.com/uploads/v1/{}?access_token={}".format(
+    url = MAPBOX_API_URL + "/uploads/v1/{}?access_token={}".format(
         mapbox_username, mapbox_token
     )
     payload = '{{"url":"http://{}.s3.amazonaws.com/{}","tileset":"{}.{}","name":"{}"}}'.format(
@@ -103,7 +106,7 @@ def wait_for_tileset_creation_complete(
     complete = False
     error = None
     while not complete and error is None:
-        url = "https://api.mapbox.com/uploads/v1/{}/{}?access_token={}".format(
+        url = MAPBOX_API_URL + "/uploads/v1/{}/{}?access_token={}".format(
             mapbox_username,
             tileset_generation_id,
             mapbox_token,

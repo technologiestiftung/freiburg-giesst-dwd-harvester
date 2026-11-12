@@ -2,11 +2,15 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # giessdenkiez-de-dwd-harvester
+
+> [!NOTE]
+> This is the Freiburg copy of [giessdenkiez-de-dwd-harvester](https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester), adapted for Freiburg gießt.
+> The area of interest is `harvester/assets/freiburg.shp` (bounding box of Freiburg), set via `SURROUNDING_SHAPE_FILE`.
 
 - Gather precipitation data from DWD's radolan data set, for the region of Berlin and connect to the giessdenkiez.de postgres DB
 - Uploads trees combined with weather data to Mapbox and uses its API to create vector tiles for use on mobile devices
@@ -177,6 +181,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/vogelino"><img src="https://avatars.githubusercontent.com/u/2759340?v=4?s=64" width="64px;" alt="Lucas Vogel"/><br /><sub><b>Lucas Vogel</b></sub></a><br /><a href="https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester/commits?author=vogelino" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/JensWinter"><img src="https://avatars.githubusercontent.com/u/6548550?v=4?s=64" width="64px;" alt="Jens Winter-Hübenthal"/><br /><sub><b>Jens Winter-Hübenthal</b></sub></a><br /><a href="https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester/commits?author=JensWinter" title="Code">💻</a> <a href="https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester/issues?q=author%3AJensWinter" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://simonjockers.de"><img src="https://avatars.githubusercontent.com/u/449739?v=4?s=64" width="64px;" alt="Simon Jockers"/><br /><sub><b>Simon Jockers</b></sub></a><br /><a href="#infra-sjockers" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester/commits?author=sjockers" title="Code">💻</a> <a href="https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester/issues?q=author%3Asjockers" title="Bug reports">🐛</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/LuiseBrandenburger"><img src="https://avatars.githubusercontent.com/u/61413319?v=4?s=64" width="64px;" alt="Luise Brandenburger"/><br /><sub><b>Luise Brandenburger</b></sub></a><br /><a href="https://github.com/technologiestiftung/freiburg-giesst-dwd-harvester/commits?author=LuiseBrandenburger" title="Code">💻</a> <a href="#data-LuiseBrandenburger" title="Data">🔣</a> <a href="https://github.com/technologiestiftung/freiburg-giesst-dwd-harvester/commits?author=LuiseBrandenburger" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>

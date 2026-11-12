@@ -1,18 +1,18 @@
 {
-	"name": "@technologiestiftung/giessdenkiez-de-dwd-harvester",
+	"name": "@technologiestiftung/freiburg-giesst-dwd-harvester",
 	"version": "1.2.1",
-	"description": "harvest radolan data from dwd",
+	"description": "Harvest radolan rain data from DWD for Freiburg gießt",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester.git"
+		"url": "git+https://github.com/technologiestiftung/freiburg-giesst-dwd-harvester.git"
 	},
 	"keywords": [],
 	"author": "ff6347 <hash@ff6347.email>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester/issues"
+		"url": "https://github.com/technologiestiftung/freiburg-giesst-dwd-harvester/issues"
 	},
-	"homepage": "https://github.com/technologiestiftung/giessdenkiez-de-dwd-harvester#readme",
+	"homepage": "https://github.com/technologiestiftung/freiburg-giesst-dwd-harvester#readme",
 	"devDependencies": {
 		"@saithodev/semantic-release-backmerge": "4.0.1",
 		"@technologiestiftung/semantic-release-config": "1.2.4"

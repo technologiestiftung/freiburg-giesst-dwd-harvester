@@ -5,13 +5,9 @@ permissions:
 
 on:
   push:
-    branches:
-      - master
-      - staging
+    branches: [main, staging]
   pull_request:
-    branches:
-      - master
-      - staging
+    branches: [main, staging]
   workflow_dispatch:
 
 env:
@@ -29,9 +25,9 @@ env:
   MAPBOXLAYERNAME: "abc"
   LOGGING: INFO
   SKIP_MAPBOX: "True"
-  WEATHER_HARVEST_LAT: "52.520008"
-  WEATHER_HARVEST_LNG: "13.404954"
-  SURROUNDING_SHAPE_FILE: "/app/assets/berlin.shp"
+  WEATHER_HARVEST_LAT: "47.9990"
+  WEATHER_HARVEST_LNG: "7.8421"
+  SURROUNDING_SHAPE_FILE: "/app/assets/freiburg.shp"
 
 jobs:
   test-harvest:
@@ -48,14 +44,14 @@ jobs:
         uses: actions/checkout@v4
         if: github.event.pull_request.base.ref == 'staging' || github.ref == 'refs/heads/staging'
         with:
-          repository: technologiestiftung/giessdenkiez-de-postgres-api
+          repository: technologiestiftung/freiburg-giesst-postgres-api
           path: api
           ref: staging
-      - name: Get the source for the api master
+      - name: Get the source for the api main
         uses: actions/checkout@v4
-        if: github.event.pull_request.base.ref == 'master' || github.ref == 'refs/heads/master'
+        if: github.event.pull_request.base.ref == 'main' || github.ref == 'refs/heads/main'
         with:
-          repository: technologiestiftung/giessdenkiez-de-postgres-api
+          repository: technologiestiftung/freiburg-giesst-postgres-api
           path: api
       - uses: supabase/setup-cli@v1
         with:
@@ -64,12 +60,12 @@ jobs:
         run: |
           cd harvester && docker build \
             --build-arg SURROUNDING_SHAPE_FILE='${{ env.SURROUNDING_SHAPE_FILE }}' \
-            --tag technologiestiftung/giessdenkiez-de-dwd-harvester:test .
+            --tag technologiestiftung/freiburg-giesst-dwd-harvester:test .
       - name: Start the api
         id: api-start
         run: cd api && supabase start | grep -w "service_role key" | cut -d ":" -f 2 | xargs |  tr -d '\n' | awk '{print "service_role_key="$1}' >> "$GITHUB_OUTPUT" && cd ..
       - name: run the harvester
-        run: docker run --env PG_SERVER='0.0.0.0' --env WEATHER_HARVEST_LAT --env WEATHER_HARVEST_LNG --env SKIP_MAPBOX --env PG_DB --env PG_PORT --env PG_USER --env PG_PASS --env SUPABASE_URL --env SUPABASE_SERVICE_ROLE_KEY='${{ steps.api-start.outputs.service_role_key }}' --env LIMIT_DAYS='30' --env SUPABASE_BUCKET_NAME --env MAPBOXTOKEN --env MAPBOXUSERNAME --env MAPBOXTILESET --env MAPBOXLAYERNAME --env LOGGING --env OUTPUT --env SURROUNDING_SHAPE_FILE='${{ env.SURROUNDING_SHAPE_FILE }}' --network host technologiestiftung/giessdenkiez-de-dwd-harvester:test
+        run: docker run --env PG_SERVER='0.0.0.0' --env WEATHER_HARVEST_LAT --env WEATHER_HARVEST_LNG --env SKIP_MAPBOX --env PG_DB --env PG_PORT --env PG_USER --env PG_PASS --env SUPABASE_URL --env SUPABASE_SERVICE_ROLE_KEY='${{ steps.api-start.outputs.service_role_key }}' --env LIMIT_DAYS='30' --env SUPABASE_BUCKET_NAME --env MAPBOXTOKEN --env MAPBOXUSERNAME --env MAPBOXTILESET --env MAPBOXLAYERNAME --env LOGGING --env OUTPUT --env SURROUNDING_SHAPE_FILE='${{ env.SURROUNDING_SHAPE_FILE }}' --network host technologiestiftung/freiburg-giesst-dwd-harvester:test
       - name: stop the api
         run: cd api && supabase stop && cd ..
   release:
@@ -91,4 +87,3 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

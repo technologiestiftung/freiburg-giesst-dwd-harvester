@@ -1,5 +1,5 @@
 {
-  "projectName": "giessdenkiez-de-dwd-harvester",
+  "projectName": "freiburg-giesst-dwd-harvester",
   "projectOwner": "technologiestiftung",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -86,6 +86,17 @@
       "contributions": [
         "code",
         "infra"
+      ]
+    },
+    {
+      "login": "LuiseBrandenburger",
+      "name": "Luise Brandenburger",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61413319?v=4",
+      "profile": "https://github.com/LuiseBrandenburger",
+      "contributions": [
+        "code",
+        "data",
+        "doc"
       ]
     }
   ],
