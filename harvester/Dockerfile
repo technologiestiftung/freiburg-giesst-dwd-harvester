@@ -7,7 +7,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update \
+# ponytail: buster is EOL, apt only works via archive.debian.org; drop when moving to a newer base image
+RUN sed -i -e 's|deb.debian.org|archive.debian.org|g' -e 's|security.debian.org|archive.debian.org|g' -e '/buster-updates/d' /etc/apt/sources.list \
+  && apt-get update \
   && apt-get install g++ gdal-bin libgdal-dev libpq-dev -y \
   && rm -rf /var/lib/apt/lists/*
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal

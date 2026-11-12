@@ -1,5 +1,5 @@
-name: "Giessdenkiez.de DWD Harvester"
-description: "Collect rain data from the DWD for the giessdenkiez.de app"
+name: "Freiburg gießt DWD Harvester"
+description: "Collect rain data from the DWD for the Freiburg gießt app"
 inputs:
   PG_SERVER:
     description: "The server where the PostgreSQL database lives"
@@ -58,6 +58,18 @@ inputs:
     description: "The path to the shape file of the area of interest"
     required: true
     default: "assets/buffer.shp"
+  DWD_RADOLAN_URL:
+    description: "Base URL of the DWD RADOLAN hourly ASC data"
+    required: false
+    default: "https://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/recent/asc"
+  BRIGHTSKY_API_URL:
+    description: "BrightSky weather endpoint"
+    required: false
+    default: "https://api.brightsky.dev/weather"
+  MAPBOX_API_URL:
+    description: "Mapbox API base URL"
+    required: false
+    default: "https://api.mapbox.com"
 runs:
   using: "docker"
   image: "harvester/Dockerfile"
@@ -81,3 +93,6 @@ runs:
     SURROUNDING_SHAPE_FILE: ${{ inputs.SURROUNDING_SHAPE_FILE }}
     WEATHER_HARVEST_LAT: ${{ inputs.WEATHER_HARVEST_LAT }}
     WEATHER_HARVEST_LNG: ${{ inputs.WEATHER_HARVEST_LNG }}
+    DWD_RADOLAN_URL: ${{ inputs.DWD_RADOLAN_URL }}
+    BRIGHTSKY_API_URL: ${{ inputs.BRIGHTSKY_API_URL }}
+    MAPBOX_API_URL: ${{ inputs.MAPBOX_API_URL }}

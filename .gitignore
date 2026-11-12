@@ -303,3 +303,8 @@ harvester/assets/buffer.dbf
 harvester/assets/buffer.shx
 
 harvester/.vscode
+harvester/assets/freiburg.shx
+harvester/assets/freiburg.dbf
+harvester/assets/freiburg.cpg
+
+.envrc

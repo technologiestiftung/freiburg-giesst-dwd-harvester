@@ -9,7 +9,10 @@ import shutil
 # We are using Radolan data from DWD
 # https://www.dwd.de/DE/leistungen/radolan/radolan.html
 # https://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/recent/asc/DESCRIPTION_gridsgermany-hourly-radolan-recent-asc_en.pdf
-url = f"https://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/recent/asc"
+url = os.getenv(
+    "DWD_RADOLAN_URL",
+    "https://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/recent/asc",
+)
 
 
 def download_radolan_data(start_date, end_date, path):
