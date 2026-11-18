@@ -55,7 +55,15 @@ try:
     logging.info("🗄 Database connection established")
 except:
     logging.error("❌Could not establish database connection")
-    conn = None
+    sys.exit(1)
+
+# idempotent: rebuilding would DELETE the grid that radolan_data references; empty the table to force a rebuild
+with conn.cursor() as cur:
+    cur.execute("SELECT EXISTS (SELECT 1 FROM public.radolan_geometry);")
+    if cur.fetchone()[0]:
+        logging.info("✅ radolan_geometry already filled, skipping grid creation")
+        conn.close()
+        sys.exit(0)
 
 # we need to give each grid cell a unique value, otherwise gdal_polygonize will combine cells with equal values
 base_grid_file = "../assets/grid-germany.asc"

@@ -92,6 +92,8 @@ Secondly, the `radolan_geometry` table needs to be populated. You need to have t
 - `cd harvester/prepare`
 - `python create-grid.py`
 
+The Docker image runs this automatically before each harvest. It does nothing if `radolan_geometry` already has rows; empty the table to rebuild the grid.
+
 ### 3. Harvesting the DWD data
 
 Make sure to set the environment variables properly before running the script. Make sure that you have succesfully ran the previous steps for preparing the buffered shapefile and creating the grid structure for the `radolan_geometry` table. The file `harvester/src/run_harvester.py` contains the script for running the DWD harvester, it does the following:
