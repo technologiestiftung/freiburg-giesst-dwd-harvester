@@ -6,8 +6,9 @@ python /app/src/run_daily_weather.py || {
     FAILED=1
 }
 
-python /app/src/run_harvester.py || {
-    echo "run_harvester.py failed"
+# create-grid.py uses paths relative to prepare/ and is a no-op once radolan_geometry is filled
+(cd /app/prepare && python create-grid.py) && python /app/src/run_harvester.py || {
+    echo "create-grid.py or run_harvester.py failed"
     FAILED=1
 }
 

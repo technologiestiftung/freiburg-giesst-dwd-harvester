@@ -17,7 +17,7 @@ Ein Docker-Job (`harvester/run_harvest.sh`) startet nacheinander zwei unabhängi
 
 Einmalige Vorbereitung (`harvester/prepare/`):
 - `create-buffer.py`: erzeugt `buffer.shp` (2 km Buffer, EPSG:3857) neben `SURROUNDING_SHAPE_FILE`. Läuft auch im Dockerfile beim Build (Build-Arg `SURROUNDING_SHAPE_FILE`).
-- `create-grid.py`: füllt `radolan_geometry` aus `assets/grid-germany.asc` + `buffer.shp`. Ohne diese Tabelle findet der Harvester keine Zellen.
+- `create-grid.py`: füllt `radolan_geometry` aus `assets/grid-germany.asc` + `buffer.shp`. Ohne diese Tabelle findet der Harvester keine Zellen. `run_harvest.sh` ruft es vor `run_harvester.py` auf; ist die Tabelle schon gefüllt, passiert nichts (zum Neuaufbau Tabelle leeren).
 
 Freiburg-Gebiet: `harvester/assets/freiburg.shp`. Die Berlin-Shapefiles bleiben für Upstream-Kompatibilität liegen.
 
