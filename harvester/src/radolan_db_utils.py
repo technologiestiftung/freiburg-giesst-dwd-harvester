@@ -20,7 +20,21 @@ def get_start_end_harvest_dates(db_conn):
         berlin_tz = pytz.timezone("Europe/Berlin")
         now_berlin_time = datetime.now(berlin_tz)
         cur.execute("SELECT collection_date FROM radolan_harvester WHERE id = 1")
-        last_date = cur.fetchone()[0]
+        row = cur.fetchone()
+        if row is None:
+            # fresh DB (migrations don't seed this row): start 30 days back,
+            # older radolan data is deleted via LIMIT_DAYS anyway
+            cur.execute(
+                """
+                INSERT INTO radolan_harvester (id, collection_date, start_date, end_date)
+                VALUES (1, CURRENT_DATE - 30, CURRENT_DATE - 30, CURRENT_DATE - 30)
+                RETURNING collection_date
+                """
+            )
+            row = cur.fetchone()
+            db_conn.commit()
+            logging.info("No radolan_harvester row found, created one starting 30 days ago")
+        last_date = row[0]
         start_date = datetime.combine(last_date, datetime.min.time())
         end_date = datetime.combine(
             now_berlin_time - timedelta(days=1), datetime.max.time()
